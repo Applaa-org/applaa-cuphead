@@ -33,7 +33,7 @@
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
-        const gameId = 'cuphead_rubber_hose_v1';
+        const gameId = 'cuphead_rubber_hose_v2';
         
         let score = 0;
         let highScore = 0;
@@ -44,11 +44,9 @@
         // MANDATORY: Initialize High Score to 0
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('highScoreDisplay').textContent = 'BEST: 0';
-            // Load from Applaa Storage
             window.parent.postMessage({ type: 'applaa-game-load-data', gameId: gameId }, '*');
         });
 
-        // Listen for Storage Response
         window.addEventListener('message', (event) => {
             if (event.data.type === 'applaa-game-data-loaded') {
                 const data = event.data.data;
@@ -98,24 +96,20 @@
         function draw() {
             ctx.fillStyle = '#d2b48c';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Ground
             ctx.fillStyle = '#5d4037';
             ctx.fillRect(0, 410, canvas.width, 40);
 
-            // Player (Rubber hose jitter)
+            // Player Jitter
             ctx.fillStyle = '#333';
             const jX = Math.random() * 2 - 1;
             const jY = Math.random() * 2 - 1;
             ctx.fillRect(player.x + jX, player.y + jY, player.w, player.h);
             
-            // Eyes
             ctx.fillStyle = 'white';
             ctx.fillRect(player.x + 25, player.y + 10, 10, 15);
             ctx.fillStyle = 'black';
             ctx.fillRect(player.x + 30, player.y + 15, 4, 4);
 
-            // Enemies
             ctx.fillStyle = '#800';
             enemies.forEach(e => ctx.fillRect(e.x, e.y, 30, 30));
         }
@@ -123,15 +117,12 @@
         function endGame() {
             gameActive = false;
             const name = document.getElementById('playerNameInput').value || 'Cuphead';
-            
-            // Save to Applaa Storage
             window.parent.postMessage({ 
                 type: 'applaa-game-save-score', 
                 gameId: gameId, 
                 playerName: name, 
                 score: score 
             }, '*');
-
             alert('KNOCKOUT! Final Score: ' + score);
             location.reload();
         }
