@@ -1,0 +1,26 @@
+{
+  "game": {
+    "name": "Cuphead: Rubber-Hose Rampage",
+    "type": "2D",
+    "genre": "Run & Gun",
+    "description": "A 1930s inspired action platformer with 8-way shooting and parry mechanics."
+  },
+  "settings": {
+    "window": {"width": 1280, "height": 720},
+    "physics": {"gravity": 1800}
+  },
+  "player": {
+    "health": 3,
+    "speed": 300,
+    "abilities": ["8-way shoot", "dash", "parry", "jump"]
+  },
+  "logic": {
+    "winCondition": "reach_end_of_stage",
+    "loseCondition": "health_zero",
+    "scoring": {
+      "enemy_kill": 50,
+      "parry": 100,
+      "time_bonus": 1000
+    }
+  }
+}
